@@ -42,7 +42,7 @@ import {
   useUpdateBlog,
 } from "@/features/blog";
 import { useGetAllTags } from "@/features/tag";
-import { uploadFile } from "@/features/upload";
+import { uploadFileToBackend } from "@/lib/upload";
 import { toSlug } from "@/lib/common";
 
 export const EditBlogForm = () => {
@@ -193,7 +193,7 @@ export const EditBlogForm = () => {
                         const fd = new FormData();
                         fd.append("file", file);
                         const toastID = showLoadingToast("上传中");
-                        const { url, error } = await uploadFile(fd);
+                        const { url, error } = await uploadFileToBackend(fd);
                         hideToast(toastID);
 
                         if (error) {

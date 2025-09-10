@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/lib/auth-context";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -106,7 +106,7 @@ export const adminNavItems: {
   ];
 
 export const AdminLayout = ({ children }: React.PropsWithChildren) => {
-  const session = useSession();
+  const { user } = useAuth();
   const [signOutDialogOpen, setSignOutDialogOpen] = React.useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const pathname = usePathname();
@@ -283,12 +283,12 @@ export const AdminLayout = ({ children }: React.PropsWithChildren) => {
                   <div className="relative">
                     <Avatar className="size-9 rounded-xl border-2 border-background shadow-sm">
                       <AvatarImage
-                        src={session.data?.user?.image ?? ""}
-                        alt={session.data?.user?.name ?? PLACEHOLDER_TEXT}
+                        src=""
+                        alt={user?.name ?? PLACEHOLDER_TEXT}
                         className="rounded-xl"
                       />
                       <AvatarFallback className="rounded-xl text-xs font-semibold bg-gradient-to-br from-primary/10 to-accent/10">
-                        {(session.data?.user?.name ?? "U").charAt(0).toUpperCase()}
+                        {(user?.name ?? "U").charAt(0).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                     {/* 在线状态指示器 */}
@@ -314,20 +314,20 @@ export const AdminLayout = ({ children }: React.PropsWithChildren) => {
                     <div className="flex items-center gap-3 p-4">
                       <Avatar className="size-12 rounded-xl border-2 border-background/50 shadow-sm">
                         <AvatarImage
-                          src={session.data?.user?.image ?? ""}
-                          alt={session.data?.user?.name ?? PLACEHOLDER_TEXT}
+                          src=""
+                          alt={user?.name ?? PLACEHOLDER_TEXT}
                           className="rounded-xl"
                         />
                         <AvatarFallback className="rounded-xl text-sm font-bold bg-gradient-to-br from-primary/20 to-accent/20">
-                          {(session.data?.user?.name ?? "U").charAt(0).toUpperCase()}
+                          {(user?.name ?? "U").charAt(0).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1 min-w-0">
                         <div className="font-semibold text-foreground truncate">
-                          {session.data?.user?.name ?? PLACEHOLDER_TEXT}
+                          {user?.name ?? PLACEHOLDER_TEXT}
                         </div>
                         <div className="text-xs text-muted-foreground truncate mt-0.5">
-                          {session.data?.user?.email ?? PLACEHOLDER_TEXT}
+                          {user?.address ?? PLACEHOLDER_TEXT}
                         </div>
                         <div className="text-xs text-green-600 mt-1 flex items-center gap-1">
                           <div className="size-1.5 bg-green-500 rounded-full"></div>

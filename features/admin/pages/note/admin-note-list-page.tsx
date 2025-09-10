@@ -3,7 +3,7 @@
 import * as React from "react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/lib/auth-context";
 
 import { TagTypeEnum } from "@prisma/client";
 import { useSetState } from "ahooks";
@@ -44,7 +44,7 @@ import {
 } from "../../components";
 
 export const AdminNoteListPage = () => {
-  const { data: session } = useSession();
+  const { user } = useAuth();
   const [params, updateParams] = useSetState<GetNotesDTO>({
     pageIndex: DEFAULT_PAGE_INDEX,
     pageSize: DEFAULT_PAGE_SIZE,
@@ -88,7 +88,7 @@ export const AdminNoteListPage = () => {
             }
           }}
         />
-        {isAdmin(session?.user?.email) && (
+        {user && (
           <Select
             onValueChange={(v: PUBLISHED_ENUM) => {
               updateInputParams({

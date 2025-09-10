@@ -14,13 +14,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { IconBrandGithub } from "@/components/icons";
 import { ModeToggle } from "@/components/mode-toggle";
 
 import { PATHS } from "@/constants";
 
-import { signInWithGithub } from "../actions/sign-in";
-import { SignInForm } from "../components/sign-in-form";
+import { SolanaSignIn } from "../components/solana-sign-in";
 
 export const SignInPage = () => {
   const router = useRouter();
@@ -39,52 +37,25 @@ export const SignInPage = () => {
             <span>后台登录</span>
             <ModeToggle />
           </CardTitle>
-          <CardDescription>选择你喜欢的方式进行登录</CardDescription>
+          <CardDescription>使用 Solana 钱包进行登录</CardDescription>
         </CardHeader>
         <CardContent>
-          <SignInForm isPending={isPending} startTransition={startTransition} />
+          <SolanaSignIn isPending={isPending} startTransition={startTransition} />
         </CardContent>
         <CardFooter>
-          <div className="grid w-full gap-4">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">
-                  或者
-                </span>
-              </div>
-            </div>
-            <Button
-              variant="outline"
-              className="!w-full"
-              type="button"
-              disabled={isPending}
-              onClick={handleSignInWithGithub}
-            >
-              <IconBrandGithub className="mr-2 text-base" /> 使用 Github 登录
-            </Button>
-            <Button
-              variant="secondary"
-              className="!w-full"
-              type="button"
-              disabled={isPending}
-              onClick={handleGoHome}
-            >
-              回首页
-            </Button>
-          </div>
+          <Button
+            variant="secondary"
+            className="!w-full"
+            type="button"
+            disabled={isPending}
+            onClick={handleGoHome}
+          >
+            回首页
+          </Button>
         </CardFooter>
       </Card>
-    </div>
+    </div >
   );
-
-  function handleSignInWithGithub() {
-    startTransition(async () => {
-      await signInWithGithub();
-    });
-  }
 
   function handleGoHome() {
     router.push(PATHS.SITE_HOME);

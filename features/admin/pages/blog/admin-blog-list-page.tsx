@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/lib/auth-context";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -59,7 +59,7 @@ import {
 } from "../../components";
 
 export const AdminBlogListPage = () => {
-  const { data: session } = useSession();
+  const { user } = useAuth();
   const router = useRouter();
   const [params, updateParams] = useSetState<GetBlogsDTO>({
     pageIndex: DEFAULT_PAGE_INDEX,
@@ -273,7 +273,7 @@ export const AdminBlogListPage = () => {
           }}
         />
 
-        {isAdmin(session?.user?.email) && (
+        {user && (
           <Select
             onValueChange={(v: PUBLISHED_ENUM) => {
               updateInputParams({ published: v });

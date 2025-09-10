@@ -5,7 +5,8 @@ import Script from "next/script";
 
 import { GoogleAnalytics } from "@next/third-parties/google";
 
-import { ThemeProvider } from "@/providers";
+import { ThemeProvider, SolanaWalletProvider } from "@/providers";
+import { AuthProvider } from "@/lib/auth-context";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
 
@@ -60,12 +61,16 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
           enableSystem
           disableTransitionOnChange
         >
-          <BProgressProvider>
-            <TooltipProvider>
-              {children}
-              <ToasterComponent />
-            </TooltipProvider>
-          </BProgressProvider>
+          <SolanaWalletProvider>
+            <AuthProvider>
+              <BProgressProvider>
+                <TooltipProvider>
+                  {children}
+                  <ToasterComponent />
+                </TooltipProvider>
+              </BProgressProvider>
+            </AuthProvider>
+          </SolanaWalletProvider>
         </ThemeProvider>
       </body>
 

@@ -10,7 +10,7 @@ import {
   showSuccessToast,
 } from "@/components/toast";
 
-import { uploadFile } from "@/features/upload";
+import { uploadFileToBackend } from "@/lib/upload";
 
 import { plugins } from "./config";
 
@@ -32,7 +32,7 @@ export const BytemdEditor = ({
       fd.append("file", file);
 
       const toastID = showLoadingToast("上传中");
-      const { url, error } = await uploadFile(fd);
+      const { url, error } = await uploadFileToBackend(fd);
       hideToast(toastID);
 
       if (error) {

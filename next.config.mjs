@@ -14,6 +14,15 @@ const config = {
   },
   // Next.js 开发模式默认会开启 React Strict Mode，会渲染2次，我们不需要
   reactStrictMode: false,
+  // 配置反向代理
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "http://127.0.0.1:8080/api/:path*",
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

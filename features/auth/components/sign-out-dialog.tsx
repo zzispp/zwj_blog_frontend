@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 
 import {
   AlertDialog,
@@ -13,7 +14,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-import { signOutAndRedirect } from "../actions/sign-out";
+import { useAuth } from "@/lib/auth-context";
+import { PATHS } from "@/constants";
 
 interface Props {
   open: boolean;
@@ -21,9 +23,13 @@ interface Props {
 }
 
 export const SignOutDialog = ({ open, setOpen }: Props) => {
+  const { logout } = useAuth();
+  const router = useRouter();
+
   async function handleLogout() {
-    await signOutAndRedirect();
+    logout();
     setOpen(false);
+    router.push(PATHS.AUTH_SIGN_IN);
   }
 
   return (
