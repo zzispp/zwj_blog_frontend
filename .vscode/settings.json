@@ -1,0 +1,8 @@
+{
+  "tailwindCSS.classFunctions": [
+    "cva",
+    "cx",
+    "cn",
+    "twMege"
+  ]
+}
