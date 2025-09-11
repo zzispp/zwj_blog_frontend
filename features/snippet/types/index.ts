@@ -2,8 +2,6 @@ import { z } from "zod";
 
 import { PUBLISHED_ENUM, REGEX } from "@/constants";
 
-import { type getSnippets } from "../actions";
-
 export const createSnippetSchema = z.object({
   title: z.string().min(1, { message: "长度不能少于1个字符" }),
   slug: z
@@ -43,6 +41,24 @@ export type CreateSnippetDTO = z.infer<typeof createSnippetSchema>;
 export type UpdateSnippetDTO = z.infer<typeof updateSnippetSchema>;
 export type GetSnippetsDTO = z.infer<typeof getSnippetsSchema>;
 
-export type Snippet = Awaited<
-  ReturnType<typeof getSnippets>
->["snippets"][number];
+// 定义 Snippet 类型（原来从 getSnippets 推导，现在手动定义）
+export interface Snippet {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  body: string;
+  published: boolean;
+  tags: Array<{
+    id: string;
+    name: string;
+    slug: string;
+    type: string;
+    icon?: string | null;
+    iconDark?: string | null;
+    created_at?: string;
+    updated_at?: string;
+  }>;
+  created_at: string;
+  updated_at: string;
+}

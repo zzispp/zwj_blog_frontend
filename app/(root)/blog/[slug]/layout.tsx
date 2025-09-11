@@ -5,13 +5,14 @@ import { type Metadata } from "next";
 import { isNil } from "es-toolkit";
 
 import { WEBSITE } from "@/constants";
-import { getPublishedBlogBySlug } from "@/features/blog";
+import { getPublishedBlogBySlugApi } from "@/lib/blog-api";
 
 export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const params = await props.params;
-  const { blog } = await getPublishedBlogBySlug(params.slug);
+  const response = await getPublishedBlogBySlugApi(params.slug);
+  const blog = response.data;
 
   if (isNil(blog)) {
     return {};

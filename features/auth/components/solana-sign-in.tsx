@@ -78,7 +78,7 @@ export function SolanaSignIn({ isPending, startTransition }: SolanaSignInProps) 
                 }
 
                 // 5. 登录成功，设置用户状态
-                login(address);
+                login(address, verifyResponse.data.token);
                 showSuccessToast("登录成功");
                 router.replace(PATHS.ADMIN_HOME);
 

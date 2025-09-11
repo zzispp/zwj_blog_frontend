@@ -9,7 +9,10 @@ export interface GetNonceResponse {
 export interface VerifySignatureResponse {
     code: number;
     message: string;
-    data?: any;
+    data: {
+        token: string;
+        address: string;
+    };
 }
 
 export interface GetNonceDTO {

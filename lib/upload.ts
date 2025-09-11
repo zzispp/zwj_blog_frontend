@@ -1,4 +1,5 @@
 // 后端文件上传相关的 API 调用
+import { apiUpload } from './api-client';
 
 export interface UploadFileResponse {
     file_name: string;
@@ -23,21 +24,7 @@ export interface UploadResult {
  */
 export async function uploadFileToBackend(formData: FormData): Promise<UploadResult> {
     try {
-        // 使用 Next.js 配置的反向代理路径
-        const response = await fetch('/api/files/upload', {
-            method: 'POST',
-            body: formData,
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const result: UploadResponse = await response.json();
-
-        if (result.code !== 200) {
-            throw new Error(result.message || '上传失败');
-        }
+        const result: UploadResponse = await apiUpload<UploadResponse>('/api/files/upload', formData);
 
         if (result.data.files.length === 0) {
             throw new Error('没有上传成功的文件');

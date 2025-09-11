@@ -41,8 +41,8 @@ export const SnippetListItem = ({ snippet }: SnippetListItemProps) => {
       <div className="flex space-x-2 text-xs text-muted-foreground">
         <div className="flex h-5 items-center space-x-1">
           <Calendar className="size-3" />
-          <time dateTime={snippet.createdAt.toISOString()}>
-            {prettyDate(snippet.createdAt)}
+          <time dateTime={snippet.created_at ? new Date(snippet.created_at).toISOString() : ''}>
+            {snippet.created_at ? prettyDate(new Date(snippet.created_at)) : '未知时间'}
           </time>
         </div>
       </div>

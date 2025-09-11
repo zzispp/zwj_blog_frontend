@@ -2,8 +2,6 @@ import { z } from "zod";
 
 import { PUBLISHED_ENUM, REGEX } from "@/constants";
 
-import { type getBlogs } from "../actions";
-
 export const createBlogSchema = z.object({
   title: z.string().min(1, { message: "长度不能少于1个字符" }),
   slug: z
@@ -45,4 +43,26 @@ export type CreateBlogDTO = z.infer<typeof createBlogSchema>;
 export type UpdateBlogDTO = z.infer<typeof updateBlogSchema>;
 export type GetBlogsDTO = z.infer<typeof getBlogsSchema>;
 
-export type Blog = Awaited<ReturnType<typeof getBlogs>>["blogs"][number];
+// 定义 Blog 类型（原来从 getBlogs 推导，现在手动定义）
+export interface Blog {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  body: string;
+  cover?: string | null;
+  author?: string | null;
+  published: boolean;
+  tags: Array<{
+    id: string;
+    name: string;
+    slug: string;
+    type: string;
+    icon?: string | null;
+    iconDark?: string | null;
+    created_at?: string;
+    updated_at?: string;
+  }>;
+  created_at: string;
+  updated_at: string;
+}

@@ -27,7 +27,7 @@ export const BlogListItem = ({ blog }: BlogListItemProps) => {
       )}
     >
       <ul className="mb-1 flex space-x-4 text-xs font-medium">
-        {blog.tags.map((tag) => (
+        {blog.tags.map((tag: Blog['tags'][number]) => (
           <li key={tag.id} className="flex items-center">
             <span className="mr-1">#&nbsp;{tag.name}</span>
             <TagPrefixIcon tag={tag} />
@@ -41,8 +41,8 @@ export const BlogListItem = ({ blog }: BlogListItemProps) => {
       <div className="flex space-x-2 text-xs text-muted-foreground">
         <div className="flex h-5 items-center space-x-1">
           <Calendar className="size-3" />
-          <time dateTime={blog.createdAt.toISOString()}>
-            {prettyDate(blog.createdAt)}
+          <time dateTime={blog.created_at ? new Date(blog.created_at).toISOString() : ''}>
+            {blog.created_at ? prettyDate(new Date(blog.created_at)) : '未知时间'}
           </time>
         </div>
       </div>

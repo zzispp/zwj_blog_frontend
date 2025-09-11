@@ -2,8 +2,6 @@ import { z } from "zod";
 
 import { PUBLISHED_ENUM } from "@/constants";
 
-import { type getNotes } from "../actions";
-
 export const createNoteSchema = z.object({
   body: z.string().min(1, { message: "长度不能少于1个字符" }),
   published: z.boolean().optional(),
@@ -35,4 +33,24 @@ export type CreateNoteDTO = z.infer<typeof createNoteSchema>;
 export type UpdateNoteDTO = z.infer<typeof updateNoteSchema>;
 export type GetNotesDTO = z.infer<typeof getNotesSchema>;
 
-export type Note = Awaited<ReturnType<typeof getNotes>>["notes"][number];
+// 定义 Note 类型（原来从 getNotes 推导，现在手动定义）
+export interface Note {
+  id: string;
+  title: string;
+  slug: string;
+  description?: string;
+  body: string;
+  published: boolean;
+  tags: Array<{
+    id: string;
+    name: string;
+    slug: string;
+    type: string;
+    icon?: string | null;
+    iconDark?: string | null;
+    createdAt?: string;
+    updatedAt?: string;
+  }>;
+  createdAt: string;
+  updatedAt: string;
+}

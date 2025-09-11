@@ -5,13 +5,15 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 interface User {
     address: string;
     name?: string;
+    token?: string;
 }
 
 interface AuthContextType {
     user: User | null;
-    login: (address: string) => void;
+    login: (address: string, token: string) => void;
     logout: () => void;
     isLoading: boolean;
+    getToken: () => string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -37,13 +39,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setIsLoading(false);
     }, []);
 
-    const login = (address: string) => {
+    const login = (address: string, token: string) => {
         const userData = {
             address,
+            token,
             name: `Solana User ${address.slice(0, 8)}...`,
         };
         setUser(userData);
         localStorage.setItem("solana-auth-user", JSON.stringify(userData));
+        localStorage.setItem("jwt-token", token);
         // 设置 cookie 以便中间件可以访问
         document.cookie = `solana-auth-user=${JSON.stringify(userData)}; path=/; max-age=${7 * 24 * 60 * 60}`; // 7天
     };
@@ -51,12 +55,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const logout = () => {
         setUser(null);
         localStorage.removeItem("solana-auth-user");
+        localStorage.removeItem("jwt-token");
         // 删除 cookie
         document.cookie = "solana-auth-user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     };
 
+    const getToken = () => {
+        if (user?.token) {
+            return user.token;
+        }
+        return localStorage.getItem("jwt-token");
+    };
+
     return (
-        <AuthContext.Provider value={{ user, login, logout, isLoading }}>
+        <AuthContext.Provider value={{ user, login, logout, isLoading, getToken }}>
             {children}
         </AuthContext.Provider>
     );

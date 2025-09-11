@@ -206,7 +206,7 @@ export const AdminTagListPage = () => {
         </div>
       ),
       cell({ row }) {
-        return row.original._count?.snippets || PLACEHOLDER_TEXT;
+        return row.original._count?.notes || PLACEHOLDER_TEXT;
       },
     },
     {
@@ -229,7 +229,7 @@ export const AdminTagListPage = () => {
         </Button>
       ),
       cell({ row }) {
-        return toSlashDateString(row.original.createdAt);
+        return row.original.createdAt ? toSlashDateString(new Date(row.original.createdAt)) : PLACEHOLDER_TEXT;
       },
     },
     {
@@ -252,7 +252,7 @@ export const AdminTagListPage = () => {
         </Button>
       ),
       cell({ row }) {
-        return toSlashDateString(row.original.updatedAt);
+        return row.original.updatedAt ? toSlashDateString(new Date(row.original.updatedAt)) : PLACEHOLDER_TEXT;
       },
     },
     {

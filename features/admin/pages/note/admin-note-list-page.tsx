@@ -1,7 +1,27 @@
 "use client";
 
 import * as React from "react";
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import dynamic from "next/dynamic";
+
+// 使用动态导入完全避免 SSR 水合错误
+const ResponsiveMasonry = dynamic(
+  () => import("react-responsive-masonry").then((mod) => mod.ResponsiveMasonry),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="grid gap-6 md:grid-cols-2">
+        {Array.from({ length: 8 }).map((_, idx) => (
+          <div key={idx} className="h-[400px] w-full rounded-lg bg-muted animate-pulse" />
+        ))}
+      </div>
+    )
+  }
+);
+
+const Masonry = dynamic(
+  () => import("react-responsive-masonry").then((mod) => mod.default),
+  { ssr: false }
+);
 
 import { useAuth } from "@/lib/auth-context";
 
@@ -30,7 +50,7 @@ import {
   PUBLISHED_ENUM,
   PUBLISHED_LABEL_MAP,
 } from "@/constants";
-import { type GetNotesDTO, useGetNotes } from "@/features/note";
+import { type GetNotesDTO, type Note, useGetNotes } from "@/features/note";
 import { useGetAllTags } from "@/features/tag";
 import { isAdmin, toFromNow, toSlashDateString } from "@/lib/common";
 import { cn } from "@/lib/utils";
@@ -148,7 +168,7 @@ export const AdminNoteListPage = () => {
                 <Skeleton className="h-[400px] w-full rounded-lg" />
               </div>
             ))
-            : data.map((note) => (
+            : data.map((note: Note) => (
               <div key={note.id} className="w-full">
                 <div className="relative w-full rounded-lg border px-6 pb-6">
                   <BytemdViewer body={note.body || ""} />
@@ -164,7 +184,7 @@ export const AdminNoteListPage = () => {
                           lg:inline-block
                         `}
                     >
-                      {toSlashDateString(note.createdAt)}
+                      {toSlashDateString(new Date(note.createdAt))}
                     </span>
                     <span
                       className={`
@@ -174,7 +194,7 @@ export const AdminNoteListPage = () => {
                     >
                       ·
                     </span>
-                    <span>{toFromNow(note.createdAt)}</span>
+                    <span>{toFromNow(new Date(note.createdAt))}</span>
                   </div>
                   <div className="absolute top-2 right-2 space-x-2">
                     <ToggleNotePublishButton

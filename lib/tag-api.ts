@@ -1,4 +1,5 @@
 // 标签管理相关的 API 调用
+import { apiPost, apiGet, apiPut, apiDelete } from './api-client';
 
 export interface CreateTagRequest {
     name: string;
@@ -64,25 +65,7 @@ export async function createTagApi(tagData: CreateTagRequest): Promise<ApiRespon
             type: frontendToBackendTypeMapping[tagData.type] || tagData.type
         };
 
-        const response = await fetch('/api/tags/create', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(backendTagData),
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const result: ApiResponse<void> = await response.json();
-
-        if (result.code !== 200) {
-            throw new Error(result.msg || '创建标签失败');
-        }
-
-        return result;
+        return await apiPost<ApiResponse<void>>('/api/tags/create', backendTagData);
 
     } catch (error) {
         console.error('创建标签失败:', error);
@@ -185,21 +168,7 @@ export async function getTagByIdApi(id: string): Promise<ApiResponse<TagItem>> {
  */
 export async function deleteTagApi(id: string): Promise<ApiResponse<void>> {
     try {
-        const response = await fetch(`/api/tags/${id}`, {
-            method: 'DELETE',
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const result: ApiResponse<void> = await response.json();
-
-        if (result.code !== 200) {
-            throw new Error(result.msg || '删除标签失败');
-        }
-
-        return result;
+        return await apiDelete<ApiResponse<void>>(`/api/tags/${id}`);
 
     } catch (error) {
         console.error('删除标签失败:', error);
@@ -219,25 +188,7 @@ export async function updateTagApi(tagData: UpdateTagRequest): Promise<ApiRespon
             type: updateData.type ? frontendToBackendTypeMapping[updateData.type] || updateData.type : undefined
         };
 
-        const response = await fetch(`/api/tags/${id}`, {
-            method: 'PUT', // 假设后端使用 PUT 进行更新
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(backendTagData),
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const result: ApiResponse<void> = await response.json();
-
-        if (result.code !== 200) {
-            throw new Error(result.msg || '更新标签失败');
-        }
-
-        return result;
+        return await apiPut<ApiResponse<void>>(`/api/tags/${id}`, backendTagData);
 
     } catch (error) {
         console.error('更新标签失败:', error);
