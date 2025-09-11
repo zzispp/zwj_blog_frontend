@@ -3,8 +3,6 @@ import { z } from "zod";
 
 import { REGEX } from "@/constants";
 
-import { type getTags } from "../actions";
-
 export const createTagSchema = z.object({
   name: z.string().min(1, { message: "长度不能少于1个字符" }),
   slug: z
@@ -46,4 +44,23 @@ export type CreateTagDTO = z.infer<typeof createTagSchema>;
 export type UpdateTagDTO = z.infer<typeof updateTagSchema>;
 export type GetTagsDTO = z.infer<typeof getTagsSchema>;
 
-export type Tag = Awaited<ReturnType<typeof getTags>>["tags"][number];
+// 定义 Tag 类型（原来从 getTags 推导，现在手动定义）
+export interface Tag {
+  id: string;
+  name: string;
+  slug: string;
+  type: TagTypeEnum;
+  icon?: string | null;
+  iconDark?: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+  // 关联数据（如果需要的话）
+  blogs?: any[];
+  notes?: any[];
+  snippets?: any[];
+  _count?: {
+    blogs: number;
+    notes: number;
+    snippets: number;
+  };
+}

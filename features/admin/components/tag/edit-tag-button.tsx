@@ -58,6 +58,14 @@ export const EditTagButton = ({ id, refreshAsync }: EditTagButtonProps) => {
   const [open, setOpen] = React.useState(false);
   const form = useForm<UpdateTagDTO>({
     resolver: zodResolver(updateTagSchema),
+    defaultValues: {
+      id: "",
+      name: "",
+      slug: "",
+      type: "ALL",
+      icon: "",
+      iconDark: "",
+    },
   });
 
   const { data, loading } = useGetTag(id, open);

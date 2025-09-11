@@ -1,18 +1,22 @@
 import { useRequest } from "ahooks";
 
 import { showErrorToast, showSuccessToast } from "@/components/toast";
-
-import { createTag } from "../actions";
+import { createTagApi, type CreateTagRequest } from "@/lib/tag-api";
 
 export const useCreateTag = () => {
-  return useRequest(createTag, {
-    manual: true,
-    loadingDelay: 300,
-    onSuccess() {
-      showSuccessToast("标签已创建");
+  return useRequest(
+    async (tagData: CreateTagRequest) => {
+      await createTagApi(tagData);
     },
-    onError(error) {
-      showErrorToast(`标签创建失败: ${error.message}`);
-    },
-  });
+    {
+      manual: true,
+      loadingDelay: 300,
+      onSuccess() {
+        showSuccessToast("标签已创建");
+      },
+      onError(error) {
+        showErrorToast(`标签创建失败: ${error.message}`);
+      },
+    }
+  );
 };

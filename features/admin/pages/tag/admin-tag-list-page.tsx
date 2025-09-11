@@ -182,7 +182,7 @@ export const AdminTagListPage = () => {
         </div>
       ),
       cell({ row }) {
-        return row.original._count.blogs || PLACEHOLDER_TEXT;
+        return row.original._count?.blogs || PLACEHOLDER_TEXT;
       },
     },
     {
@@ -194,7 +194,7 @@ export const AdminTagListPage = () => {
         </div>
       ),
       cell({ row }) {
-        return row.original._count.snippets || PLACEHOLDER_TEXT;
+        return row.original._count?.snippets || PLACEHOLDER_TEXT;
       },
     },
     {
@@ -206,7 +206,7 @@ export const AdminTagListPage = () => {
         </div>
       ),
       cell({ row }) {
-        return row.original._count.snippets || PLACEHOLDER_TEXT;
+        return row.original._count?.snippets || PLACEHOLDER_TEXT;
       },
     },
     {
