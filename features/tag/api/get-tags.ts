@@ -1,4 +1,4 @@
-import { type TagTypeEnum } from "@prisma/client";
+import { type TagTypeEnum } from "@/constants";
 import { useRequest } from "ahooks";
 
 import { getTagsApi, getAllTagsApi, type GetTagsRequest } from "@/lib/tag-api";

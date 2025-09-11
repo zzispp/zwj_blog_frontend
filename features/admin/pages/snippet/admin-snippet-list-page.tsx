@@ -6,7 +6,7 @@ import { useAuth } from "@/lib/auth-context";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { TagTypeEnum } from "@prisma/client";
+import { TagTypeEnum } from "@/constants";
 import { type ColumnDef } from "@tanstack/react-table";
 import { useSetState } from "ahooks";
 import { isUndefined } from "es-toolkit";

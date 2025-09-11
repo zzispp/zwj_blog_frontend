@@ -1,4 +1,4 @@
-import { TagTypeEnum } from "@prisma/client";
+import { TagTypeEnum } from "@/constants";
 import { z } from "zod";
 
 import { REGEX } from "@/constants";

@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { TagTypeEnum } from "@prisma/client";
+import { TagTypeEnum } from "@/constants";
 import { type ColumnDef } from "@tanstack/react-table";
 import { useSetState } from "ahooks";
 import { isUndefined } from "es-toolkit";

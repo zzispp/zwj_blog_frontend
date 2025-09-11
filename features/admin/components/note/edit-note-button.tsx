@@ -4,7 +4,7 @@ import * as React from "react";
 import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TagTypeEnum } from "@prisma/client";
+import { TagTypeEnum } from "@/constants";
 import { LoaderCircle, Pen, Save } from "lucide-react";
 
 import { Button } from "@/components/ui/button";

@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { useParams, useRouter } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TagTypeEnum } from "@prisma/client";
+import { TagTypeEnum } from "@/constants";
 import { isNil } from "es-toolkit";
 import { Save } from "lucide-react";
 

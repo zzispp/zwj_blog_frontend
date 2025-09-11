@@ -6,7 +6,7 @@ import { useAuth } from "@/lib/auth-context";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { TagTypeEnum } from "@prisma/client";
+import { TagTypeEnum } from "@/constants";
 import { type ColumnDef } from "@tanstack/react-table";
 import { useSetState } from "ahooks";
 import { isUndefined } from "es-toolkit";
@@ -65,7 +65,7 @@ export const AdminBlogListPage = () => {
     pageIndex: DEFAULT_PAGE_INDEX,
     pageSize: DEFAULT_PAGE_SIZE,
     order: "desc",
-    orderBy: "createdAt",
+    orderBy: "created_at",
   });
 
   const [inputParams, updateInputParams] = useSetState<
@@ -182,21 +182,21 @@ export const AdminBlogListPage = () => {
         <Button
           variant="ghost"
           onClick={() => {
-            handleOrderChange("createdAt");
+            handleOrderChange("created_at");
           }}
         >
           <Calendar className="size-4" />
           <span className="mx-1">创建时间</span>
-          {params.order === "asc" && params.orderBy == "createdAt" && (
+          {params.order === "asc" && params.orderBy == "created_at" && (
             <ArrowUpNarrowWide className="size-4" />
           )}
-          {params.order === "desc" && params.orderBy == "createdAt" && (
+          {params.order === "desc" && params.orderBy == "created_at" && (
             <ArrowDownNarrowWide className="size-4" />
           )}
         </Button>
       ),
       cell({ row }) {
-        return toSlashDateString(row.original.createdAt);
+        return toSlashDateString(new Date(row.original.created_at));
       },
     },
     {
@@ -205,21 +205,21 @@ export const AdminBlogListPage = () => {
         <Button
           variant="ghost"
           onClick={() => {
-            handleOrderChange("updatedAt");
+            handleOrderChange("updated_at");
           }}
         >
           <Calendar className="size-4" />
           <span className="mx-1">更新时间</span>
-          {params.order === "asc" && params.orderBy == "updatedAt" && (
+          {params.order === "asc" && params.orderBy == "updated_at" && (
             <ArrowUpNarrowWide className="size-4" />
           )}
-          {params.order === "desc" && params.orderBy == "updatedAt" && (
+          {params.order === "desc" && params.orderBy == "updated_at" && (
             <ArrowDownNarrowWide className="size-4" />
           )}
         </Button>
       ),
       cell({ row }) {
-        return toSlashDateString(row.original.updatedAt);
+        return toSlashDateString(new Date(row.original.updated_at));
       },
     },
     {
@@ -357,7 +357,7 @@ export const AdminBlogListPage = () => {
       tags: undefined,
       pageIndex: DEFAULT_PAGE_INDEX,
       order: "desc",
-      orderBy: "createdAt",
+      orderBy: "created_at",
     });
   }
 

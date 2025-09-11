@@ -1,9 +1,15 @@
-import { TagTypeEnum } from "@prisma/client";
-
 /** 空数据文案 */
 export const PLACEHOLDER_TEXT = "N/A";
 
 export const ADMIN_EMAILS = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(",");
+
+// 替换原来的 TagTypeEnum，使用本地枚举定义
+export enum TagTypeEnum {
+  ALL = "ALL",
+  BLOG = "BLOG",
+  NOTE = "NOTE",
+  SNIPPET = "SNIPPET",
+}
 
 export const TAG_TYPES = [
   TagTypeEnum.ALL,

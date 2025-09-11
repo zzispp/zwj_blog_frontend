@@ -35,7 +35,7 @@ export const getBlogsSchema = z.object({
   tags: z.string().array().optional(),
   pageIndex: z.number(),
   pageSize: z.number(),
-  orderBy: z.enum(["createdAt", "updatedAt"]).optional(),
+  orderBy: z.enum(["created_at", "updated_at"]).optional(),
   order: z.enum(["asc", "desc"]).optional(),
 });
 

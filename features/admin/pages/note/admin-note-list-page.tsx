@@ -25,7 +25,7 @@ const Masonry = dynamic(
 
 import { useAuth } from "@/lib/auth-context";
 
-import { TagTypeEnum } from "@prisma/client";
+import { TagTypeEnum } from "@/constants";
 import { useSetState } from "ahooks";
 import { isUndefined } from "es-toolkit";
 import { RotateCw, Search } from "lucide-react";
