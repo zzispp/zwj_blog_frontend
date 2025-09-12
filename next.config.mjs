@@ -14,6 +14,15 @@ const config = {
   },
   // Next.js 开发模式默认会开启 React Strict Mode，会渲染2次，我们不需要
   reactStrictMode: false,
+  // 优化构建性能
+  swcMinify: true,
+  // 优化打包
+  compress: true,
+  // 减少构建时的并发数
+  experimental: {
+    workerThreads: false,
+    cpus: 1,
+  },
   // 配置反向代理
   async rewrites() {
     return [
