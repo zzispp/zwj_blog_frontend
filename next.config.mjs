@@ -21,7 +21,7 @@ const config = {
     return [
       {
         source: "/api/:path*",
-        destination: "http://api.gmgn.rs/api/:path*",
+        destination: "https://api.gmgn.rs/api/:path*",
       },
     ];
   },
