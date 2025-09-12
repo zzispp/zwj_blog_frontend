@@ -1,28 +1,67 @@
-import { notFound } from "next/navigation";
+"use client";
 
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import { isNil } from "es-toolkit";
-
 import { SnippetDetailPage } from "@/features/snippet";
 import { getPublishedSnippetBySlugApi } from "@/lib/snippet-api";
+import { type Snippet } from "@/features/snippet/types";
+import { IllustrationNoContent } from "@/components/illustrations";
 
-export const revalidate = 60;
+export default function Page() {
+  const params = useParams();
+  const slug = params.slug as string;
+  const [snippet, setSnippet] = useState<Snippet | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-export default async function Page(props: {
-  params: Promise<{ slug: string }>;
-}) {
-  const params = await props.params;
+  useEffect(() => {
+    const fetchSnippet = async () => {
+      try {
+        setLoading(true);
+        const response = await getPublishedSnippetBySlugApi(slug);
+        const snippetData = response.data;
 
-  try {
-    // 直接调用后端API获取代码片段
-    const response = await getPublishedSnippetBySlugApi(params.slug);
-    const snippet = response.data;
+        if (isNil(snippetData) || !snippetData.published) {
+          setError('代码片段不存在或未发布');
+        } else {
+          setSnippet(snippetData);
+        }
+      } catch (err) {
+        console.error('获取代码片段详情失败:', err);
+        setError('获取代码片段详情失败');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    if (isNil(snippet) || !snippet.published) {
-      return notFound();
+    if (slug) {
+      fetchSnippet();
     }
+  }, [slug]);
 
-    return <SnippetDetailPage snippet={snippet} />;
-  } catch (error) {
-    return notFound();
+  if (loading) {
+    return (
+      <div className="mx-auto flex min-h-screen max-w-wrapper flex-col px-6 pt-8 pb-24">
+        <div className="grid place-content-center gap-8">
+          <div className="text-center">加载中...</div>
+        </div>
+      </div>
+    );
   }
+
+  if (error || !snippet) {
+    return (
+      <div className="mx-auto flex min-h-screen max-w-wrapper flex-col px-6 pt-8 pb-24">
+        <div className="grid place-content-center gap-8">
+          <IllustrationNoContent className="size-[30vh]" />
+          <h3 className="text-center text-2xl font-semibold tracking-tight">
+            {error || '代码片段不存在'}
+          </h3>
+        </div>
+      </div>
+    );
+  }
+
+  return <SnippetDetailPage snippet={snippet} />;
 }
