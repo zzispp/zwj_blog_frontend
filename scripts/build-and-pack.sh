@@ -1,14 +1,11 @@
 #!/bin/bash
 
 # 本地构建和打包脚本
-# 使用方法: ./scripts/build-and-pack.sh [服务器地址]
+# 使用方法: ./scripts/build-and-pack.sh
 
 set -e  # 遇到错误立即退出
 
 echo "🚀 开始本地构建和打包..."
-
-# 检查是否提供了服务器地址
-SERVER_ADDRESS=${1:-""}
 
 # 清理之前的构建
 echo "🧹 清理之前的构建文件..."
@@ -46,18 +43,11 @@ echo "✅ 构建和打包完成！"
 echo "📄 打包文件: dist.tar.gz"
 echo "📊 文件大小: $(du -h dist.tar.gz | cut -f1)"
 
-# 如果提供了服务器地址，询问是否上传
-if [ ! -z "$SERVER_ADDRESS" ]; then
-    echo ""
-    read -p "🚀 是否立即上传到服务器 $SERVER_ADDRESS? (y/N): " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        echo "📤 上传到服务器..."
-        scp dist.tar.gz ubuntu@$SERVER_ADDRESS:/home/ubuntu/web/zwj_blog_frontend/
-        echo "✅ 上传完成！"
-        echo "💡 现在可以在服务器上运行部署脚本: ./scripts/deploy.sh"
-    fi
-fi
-
 echo ""
 echo "🎉 本地构建流程完成！"
+echo ""
+echo "💡 手动上传到服务器命令:"
+echo "   scp -i /Users/bubu/Desktop/zwj_blog.pem dist.tar.gz ubuntu@16.162.120.244:/home/ubuntu/web/zwj_blog_frontend/"
+echo ""
+echo "💡 登录服务器命令:"
+echo "   ssh -i /Users/bubu/Desktop/zwj_blog.pem ubuntu@16.162.120.244"
