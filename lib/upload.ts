@@ -37,7 +37,7 @@ export async function uploadFileToBackend(formData: FormData): Promise<UploadRes
         }
 
         const backendHost = process.env.NEXT_PUBLIC_BACKEND_HOST || '127.0.0.1:8080';
-        const fullUrl = `http://${backendHost}${uploadedFile.url}`;
+        const fullUrl = `https://${backendHost}${uploadedFile.url}`;
 
         return { url: fullUrl };
 
