@@ -21,7 +21,7 @@ fi
 
 # 构建项目
 echo "🔨 开始构建项目..."
-pnpm run build:low-memory
+pnpm run build
 
 # 检查构建是否成功
 if [ ! -d ".next" ]; then

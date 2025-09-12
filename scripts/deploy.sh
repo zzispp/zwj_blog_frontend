@@ -42,7 +42,7 @@ fi
 
 # 安装生产依赖
 echo "📥 安装生产依赖..."
-pnpm install --prod --frozen-lockfile
+pnpm install --prod --frozen-lockfile --ignore-scripts
 
 # PM2 应用名称
 APP_NAME="zwj-blog"

@@ -16,11 +16,6 @@ const config = {
   reactStrictMode: false,
   // 优化打包
   compress: true,
-  // 减少构建时的并发数
-  experimental: {
-    workerThreads: false,
-    cpus: 1,
-  },
   // 配置反向代理
   async rewrites() {
     return [
