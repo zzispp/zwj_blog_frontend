@@ -13,8 +13,8 @@ export const SnippetDetailPage = ({ snippet }: SnippetDetailProps) => {
   return (
     <div
       className={`
-        mx-auto flex max-w-prose-wrapper flex-col pt-8
-        md:!px-0
+        mx-auto flex max-w-prose-wrapper flex-col px-6 pt-8
+        md:px-0
       `}
     >
       <h1 className="mb-6 text-4xl font-semibold break-all">{snippet.title}</h1>

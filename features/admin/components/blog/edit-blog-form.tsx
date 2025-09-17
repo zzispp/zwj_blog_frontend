@@ -84,6 +84,7 @@ export const EditBlogForm = () => {
     form.setValue("body", blog?.body ?? "");
     form.setValue("published", blog?.published ?? true);
     form.setValue("cover", blog?.cover ?? "");
+    form.setValue("author", blog?.author ?? "");
     form.setValue("tags", blog?.tags.map((el) => el.id) ?? []);
   }, [blog, form]);
 

@@ -60,9 +60,9 @@ export interface Blog {
     type: string;
     icon?: string | null;
     iconDark?: string | null;
-    created_at?: string;
-    updated_at?: string;
+    createdAt?: string;
+    updatedAt?: string;
   }>;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 }

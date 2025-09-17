@@ -196,7 +196,7 @@ export const AdminBlogListPage = () => {
         </Button>
       ),
       cell({ row }) {
-        return toSlashDateString(new Date(row.original.created_at));
+        return toSlashDateString(new Date(row.original.createdAt));
       },
     },
     {
@@ -219,7 +219,7 @@ export const AdminBlogListPage = () => {
         </Button>
       ),
       cell({ row }) {
-        return toSlashDateString(new Date(row.original.updated_at));
+        return toSlashDateString(new Date(row.original.updatedAt));
       },
     },
     {
